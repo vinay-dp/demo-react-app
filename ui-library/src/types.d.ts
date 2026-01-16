@@ -11,10 +11,10 @@ export interface IconProps {
     size?: number;
 }
 
-// InputProps extends standard HTML input attributes without additional properties
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    // Inherits all standard input attributes
-}
+
+// InputProps is a type alias for standard HTML input attributes
+export type InputProps = InputHTMLAttributes<HTMLInputElement>;
+
 
 export interface DropdownProps extends SelectHTMLAttributes<HTMLSelectElement> {
     options: string[];
