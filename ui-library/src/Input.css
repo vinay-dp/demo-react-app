@@ -1,0 +1,20 @@
+/* Input Component Styles */
+
+.ui-input {
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.ui-input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.ui-input::placeholder {
+    color: #6c757d;
+}

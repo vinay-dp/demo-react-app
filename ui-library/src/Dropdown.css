@@ -1,0 +1,22 @@
+/* Dropdown Component Styles */
+
+.ui-dropdown {
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.ui-dropdown:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.ui-dropdown option {
+    padding: 10px;
+}
