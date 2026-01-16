@@ -1,5 +1,5 @@
 // Type declarations for ui-library components
-import { FC, InputHTMLAttributes, SelectHTMLAttributes, ButtonHTMLAttributes } from 'react';
+import { InputHTMLAttributes, SelectHTMLAttributes, ButtonHTMLAttributes } from 'react';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary';
@@ -11,7 +11,10 @@ export interface IconProps {
     size?: number;
 }
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> { }
+// InputProps extends standard HTML input attributes without additional properties
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+    // Inherits all standard input attributes
+}
 
 export interface DropdownProps extends SelectHTMLAttributes<HTMLSelectElement> {
     options: string[];
