@@ -39,3 +39,17 @@ export interface CheckboxProps {
     disabled?: boolean;
 }
 
+export interface TextFieldProps {
+    label?: string;
+    placeholder?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url';
+    error?: string;
+    helperText?: string;
+    disabled?: boolean;
+    required?: boolean;
+    fullWidth?: boolean;
+    icon?: React.ReactNode;
+}
+
