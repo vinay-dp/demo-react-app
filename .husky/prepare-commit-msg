@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# Check if ui-library files were changed
+ui_library_changed=$(git diff --cached --name-only | grep "^ui-library/" | wc -l)
+
+# Only prompt if ui-library files were modified
+if [ "$ui_library_changed" -gt 0 ]; then
+  echo ""
+  echo "📦 UI Library files changed detected!"
+  echo ""
+  
+  # Read current version
+  current_version=$(node -p "require('./ui-library/package.json').version")
+  echo "Current version: $current_version"
+  echo ""
+  echo "Select version update type:"
+  echo "  1) Major (breaking changes) - e.g., 1.0.0 → 2.0.0"
+  echo "  2) Minor (new features) - e.g., 1.0.0 → 1.1.0"
+  echo "  3) Patch (bug fixes) - e.g., 1.0.0 → 1.0.1"
+  echo "  4) Skip version update"
+  echo ""
+  
+  # Read user input
+  printf "Enter choice (1-4): "
+  read choice
+  
+  case "$choice" in
+    1)
+      version_type="major"
+      ;;
+    2)
+      version_type="minor"
+      ;;
+    3)
+      version_type="patch"
+      ;;
+    4)
+      echo "⏭️  Skipping version update"
+      exit 0
+      ;;
+    *)
+      echo "❌ Invalid choice. Skipping version update."
+      exit 0
+      ;;
+  esac
+  
+  echo ""
+  echo "🔄 Updating version ($version_type)..."
+  
+  # Update version
+  cd ui-library
+  npm version $version_type --no-git-tag-version > /dev/null 2>&1
+  cd ..
+  
+  # Get new version
+  new_version=$(node -p "require('./ui-library/package.json').version")
+  
+  echo "✅ Version updated: $current_version → $new_version"
+  echo ""
+  
+  # Stage the version changes
+  git add ui-library/package.json ui-library/package-lock.json
+  
+  echo "📝 Version files staged for commit"
+  echo ""
+fi
+
+exit 0
