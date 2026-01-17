@@ -20,7 +20,11 @@ body {
 
 .bubble {
   position: absolute;
+  width: 200px;
+  height: 200px;
 }
+
+
 
 .container {
   max-width: 600px;
