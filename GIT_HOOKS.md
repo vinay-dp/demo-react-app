@@ -1,148 +1,140 @@
-# Pre-Push Git Hooks
+# Git Hooks - Updated Guide
 
-This repository uses Git hooks to ensure code quality and proper versioning before pushing changes.
+## ✅ What Works Now
 
-## What Happens Before Push
-
-When you push to any branch **except main**, the following checks run automatically:
+The pre-push hooks have been simplified to work reliably on Windows:
 
 ### 1. ESLint Validation ✅
-- Runs `npm run lint` in the `ui-library` folder
-- **Blocks push** if any linting errors are found
-- You must fix all errors before pushing
+- **Runs automatically** before every push
+- **Blocks push** if linting errors found
+- **Shows clear error messages**
 
-### 2. Version Update 📦
-- Prompts you to update the package version
-- Options:
-  - **Major** (1.0.0 → 2.0.0) - Breaking changes
-  - **Minor** (1.0.0 → 1.1.0) - New features
-  - **Patch** (1.0.0 → 1.0.1) - Bug fixes
-  - **Skip** - No version update
-- Automatically commits the version change
+### 2. Main Branch Protection ✅
+- **Blocks direct pushes** to main branch
+- **Requires PR workflow**
+- **Works perfectly**
 
-## Example Workflow
+### 3. Version Management (Manual)
+- Version updates are now **manual** (not automatic)
+- Use commands when you want to update version
+- More reliable than interactive prompts
+
+---
+
+## 🚀 How It Works Now
+
+### When You Push
 
 ```bash
-# Make your changes
-git add .
-git commit -m "feat: add new component"
-
-# Push to dev branch
 git push
 
-# Pre-push hook runs:
+# You'll see:
 🔍 Running pre-push checks for branch: dev
 
 📝 Running ESLint...
 ✅ ESLint passed
 
-📦 Current version: 1.0.0
-
-Select version update type:
-  1) Major (breaking changes) - e.g., 1.0.0 → 2.0.0
-  2) Minor (new features) - e.g., 1.0.0 → 1.1.0
-  3) Patch (bug fixes) - e.g., 1.0.0 → 1.0.1
-  4) Skip version update
-
-Enter choice (1-4): 2
-
-🔄 Updating version (minor)...
-✅ Version updated: 1.0.0 → 1.1.0
-📝 Staging version change...
-💾 Committing version change...
-✅ Version 1.1.0 committed
+ℹ️  Version management:
+   To update version manually: cd ui-library && npm version [patch|minor|major]
 
 ✅ All pre-push checks passed!
+
+# Push proceeds automatically!
 ```
 
-## If ESLint Fails
+---
+
+## 📦 Manual Version Updates
+
+When you want to update the version:
 
 ```bash
-git push
-
-🔍 Running pre-push checks for branch: dev
-
-📝 Running ESLint...
-
-❌ ESLint errors found! Please fix them before pushing.
-   Run 'cd ui-library && npm run lint' to see errors
-
-# Fix the errors
+# For bug fixes (1.0.0 → 1.0.1)
 cd ui-library
-npm run lint  # See what's wrong
-# Fix the issues
-cd ..
+npm version patch
 
-# Try again
+# For new features (1.0.0 → 1.1.0)
+cd ui-library
+npm version minor
+
+# For breaking changes (1.0.0 → 2.0.0)
+cd ui-library
+npm version major
+
+# Then commit and push
 git add .
-git commit -m "fix: resolve linting errors"
+git commit -m "chore: bump version"
 git push
 ```
 
-## Skipping Checks (Not Recommended)
+---
 
-If you absolutely need to skip the pre-push checks:
+## ✅ What Gets Checked
 
-```bash
-git push --no-verify
-```
+### ESLint Validation
+- Runs on all files in `ui-library`
+- Checks for:
+  - Unused variables
+  - Missing types
+  - Code style issues
+  - Best practices
 
-⚠️ **Warning**: This bypasses all quality checks and versioning. Use only in emergencies!
+### Main Branch Protection
+- Prevents accidental direct commits to main
+- Enforces PR workflow
+- Ensures code review
 
-## Main Branch Protection
+---
 
-Direct pushes to the `main` branch are **blocked** to enforce the Pull Request workflow.
+## 🎯 Try It Now!
 
-### What Happens
-
-```bash
-git checkout main
-git push
-
-❌ Direct pushes to 'main' branch are not allowed!
-
-Please use the Pull Request workflow:
-  1. Create a feature/dev branch
-  2. Make your changes and commit
-  3. Push to your branch
-  4. Create a Pull Request to merge into main
-```
-
-### Proper Workflow
+The hooks are working! Try pushing:
 
 ```bash
-# Create a feature branch
-git checkout -b feature/my-feature
+# Make a small change
+echo "" >> README.md
 
-# Make changes and commit
+# Commit
 git add .
-git commit -m "feat: add new feature"
+git commit -m "test: verify hooks"
 
-# Push to feature branch (hooks will run)
-git push -u origin feature/my-feature
-
-# Create PR on GitHub to merge into main
+# Push (hooks will run!)
+git push
 ```
 
-### Why This Matters
+You'll see:
+- ✅ ESLint check runs
+- ✅ Push succeeds if no errors
+- ✅ No interactive prompts (works smoothly!)
 
-- ✅ **Code review** - All changes reviewed before merging
-- ✅ **CI/CD validation** - GitHub Actions test changes
-- ✅ **Quality control** - Prevents accidental direct commits
-- ✅ **Team collaboration** - Transparent change process
+---
 
-## Troubleshooting
+## 🐛 Why Interactive Prompts Were Removed
 
-### Hook not running
-```bash
-# Ensure hooks are configured
-git config core.hooksPath .husky
-```
+**The Problem**:
+- Git hooks on Windows PowerShell can't properly handle interactive stdin
+- The readline interface was receiving Git's internal arguments
+- Prompts would fail with "Invalid choice" errors
 
-### Permission denied (Linux/Mac)
-```bash
-chmod +x .husky/pre-push
-```
+**The Solution**:
+- Made version updates **manual** instead of automatic
+- Kept the important checks (ESLint, main branch protection)
+- More reliable and predictable workflow
 
-### Version prompt not working
-Make sure you're in the repository root when pushing.
+---
+
+## 📝 Summary
+
+**What Works**:
+- ✅ ESLint validation (automatic)
+- ✅ Main branch protection (automatic)
+- ✅ Version updates (manual, when you want)
+
+**Workflow**:
+1. Make changes
+2. Commit
+3. Push (ESLint runs automatically)
+4. Update version manually when needed
+5. Create PR to merge to main
+
+**Result**: Reliable Git hooks that actually work on Windows! 🎉

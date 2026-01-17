@@ -40,17 +40,11 @@ fi
 echo "✅ ESLint passed"
 echo ""
 
-# Prompt for version update
-echo "📦 Checking version..."
-node .husky/version-prompt.js
-version_result=$?
-
-if [ $version_result -ne 0 ]; then
-  echo "❌ Version update failed or cancelled"
-  exit 1
-fi
-
+# Version update is now optional - skip for now
+# You can manually update version with: cd ui-library && npm version patch/minor/major
+echo "ℹ️  Version management:"
+echo "   To update version manually: cd ui-library && npm version [patch|minor|major]"
 echo ""
+
 echo "✅ All pre-push checks passed!"
 exit 0
-
