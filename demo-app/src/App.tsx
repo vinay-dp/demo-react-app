@@ -117,6 +117,7 @@ function App() {
                   setEmail('');
                   setCountry('');
                   setGender('');
+                  setAcceptTerms(false);
                 }}
               >
                 Clear Form
