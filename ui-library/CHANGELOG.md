@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/vinay-dp/demo-react-app/compare/v1.1.1...v1.2.0) (2026-01-17)
+
+
+### Features
+
+* **inputfield:** feature ([f453490](https://github.com/vinay-dp/demo-react-app/commit/f45349000aa623bc2e4d51f2e87fdec3c7e04d0c))
+
+
+### Bug Fixes
+
+* correct YAML syntax in publish workflow ([ae96ef8](https://github.com/vinay-dp/demo-react-app/commit/ae96ef89e5b47740ea58d7fad95c1142082ffbb2))
+* disable automatic npm publishing workflow ([c991e3f](https://github.com/vinay-dp/demo-react-app/commit/c991e3f91756b2e6ce28345d7f47a005f9cd5eb7))
+
 ### [1.1.1](https://github.com/vinay-dp/demo-react-app/compare/v1.1.0...v1.1.1) (2026-01-17)
 
 
