@@ -18,6 +18,10 @@ body {
   padding: 40px 20px;
 }
 
+.bubble {
+  position: absolute;
+}
+
 .container {
   max-width: 600px;
   margin: 0 auto;
