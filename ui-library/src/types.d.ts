@@ -30,3 +30,12 @@ export interface RadioButtonProps {
     disabled?: boolean;
 }
 
+export interface CheckboxProps {
+    checked: boolean;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    label: string;
+    name?: string;
+    value?: string;
+    disabled?: boolean;
+}
+

@@ -4,7 +4,7 @@
 import { useState } from 'react';
 // Import all components from the ui-library package
 // This works because we linked ui-library as an npm dependency
-import { Button, Icon, Input, Dropdown, RadioButton } from 'ui-library';
+import { Button, Icon, Input, Dropdown, RadioButton, Checkbox } from 'ui-library';
 // Import the CSS from the library
 import 'ui-library/dist/ui-library.css';
 import './App.css';
@@ -15,10 +15,11 @@ function App() {
   const [email, setEmail] = useState('');
   const [country, setCountry] = useState('');
   const [gender, setGender] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(false);
 
   // Handle form submission
   const handleSubmit = () => {
-    alert(`Form Submitted!\nName: ${name}\nEmail: ${email}\nCountry: ${country}\nGender: ${gender}`);
+    alert(`Form Submitted!\nName: ${name}\nEmail: ${email}\nCountry: ${country}\nGender: ${gender}\nAccept Terms: ${acceptTerms ? 'Yes' : 'No'}`);
   };
 
   return (
@@ -97,6 +98,14 @@ function App() {
               </div>
             </div>
 
+            <div className="form-group">
+              <Checkbox
+                checked={acceptTerms}
+                onChange={(e) => setAcceptTerms(e.target.checked)}
+                label="I accept the terms and conditions"
+              />
+            </div>
+
             <div className="button-group">
               <Button onClick={handleSubmit}>
                 Submit Form
@@ -108,6 +117,7 @@ function App() {
                   setEmail('');
                   setCountry('');
                   setGender('');
+                  setAcceptTerms(false);
                 }}
               >
                 Clear Form
