@@ -1,30 +1,18 @@
-# Git Hooks - Version Prompts on Commit
+# Version Management - Simple & Reliable
 
-## ✅ How It Works Now
+## ✅ How to Update Version
 
-Version prompts appear **when you commit** changes to ui-library files.
-
----
-
-## 🔄 Workflow
-
-### When You Commit UI Library Changes
+Run this command **before committing** ui-library changes:
 
 ```bash
-# 1. Make changes to ui-library
-# Edit files in ui-library/src/...
-
-# 2. Stage your changes
-git add .
-
-# 3. Commit (version prompt appears!)
-git commit -m "feat: add new component"
+cd ui-library
+npm run bump
 ```
 
 **You'll see**:
-
 ```
-📦 UI Library files changed detected!
+📦 Bump UI Library Version
+═══════════════════════════════
 
 Current version: 1.0.0
 
@@ -32,162 +20,128 @@ Select version update type:
   1) Major (breaking changes) - e.g., 1.0.0 → 2.0.0
   2) Minor (new features) - e.g., 1.0.0 → 1.1.0
   3) Patch (bug fixes) - e.g., 1.0.0 → 1.0.1
-  4) Skip version update
+  4) Cancel
 
 Enter choice (1-4): _
 ```
 
-**Type your choice** (1, 2, 3, or 4) and press Enter!
-
-**Then**:
-
-```
-🔄 Updating version (minor)...
-✅ Version updated: 1.0.0 → 1.1.0
-📝 Version files staged for commit
-
-[dev abc1234] feat: add new component
- 3 files changed, 50 insertions(+)
-```
-
-The version update is **included in the same commit**!
+**Type your choice** and press Enter - it works perfectly!
 
 ---
 
-## 📝 When Prompts Appear
+## 🚀 Complete Workflow
 
-### ✅ Prompts Appear When:
-- You commit changes to **ui-library/** files
-- Component files (.tsx, .css)
-- Library configuration (package.json, tsconfig.json)
-- Any file in ui-library folder
-
-### ⏭️ Prompts Skip When:
-- You commit changes to **demo-app/** only
-- Documentation files only (README.md, etc.)
-- Git configuration files
-- No ui-library files changed
-
----
-
-## 🎯 Example Scenarios
-
-### Scenario 1: Adding a New Component
+### When Making UI Library Changes
 
 ```bash
-# Create new component
-# Edit ui-library/src/components/Switch/Switch.tsx
+# 1. Make your changes
+# Edit ui-library/src/components/...
 
+# 2. Bump version (interactive prompt)
+cd ui-library
+npm run bump
+# → Select 1, 2, or 3
+# → Version updates automatically
+
+# 3. Commit everything (including version)
+cd ..
 git add .
-git commit -m "feat: add Switch component"
+git commit -m "feat: add new component"
 
-# Prompt appears:
-# Enter choice (1-4): 2  ← You type "2" for minor
-
-# Result: Version 1.0.0 → 1.1.0
+# 4. Push (ESLint check runs)
+git push
 ```
 
-### Scenario 2: Fixing a Bug
+---
+
+## 📝 Examples
+
+### Adding a New Component (Minor)
 
 ```bash
-# Fix bug in Button component
-# Edit ui-library/src/components/Button/Button.tsx
+# Create new Checkbox component
+# ui-library/src/components/Checkbox/...
 
+cd ui-library
+npm run bump
+# Enter: 2 (Minor)
+# Version: 1.0.0 → 1.1.0
+
+cd ..
+git add .
+git commit -m "feat: add Checkbox component"
+git push
+```
+
+### Fixing a Bug (Patch)
+
+```bash
+# Fix button hover issue
+# ui-library/src/components/Button/Button.css
+
+cd ui-library
+npm run bump
+# Enter: 3 (Patch)
+# Version: 1.1.0 → 1.1.1
+
+cd ..
 git add .
 git commit -m "fix: button hover state"
-
-# Prompt appears:
-# Enter choice (1-4): 3  ← You type "3" for patch
-
-# Result: Version 1.0.0 → 1.0.1
+git push
 ```
 
-### Scenario 3: Only Demo App Changes
+### Breaking Change (Major)
 
 ```bash
-# Edit demo-app/src/App.tsx only
+# Change Button API
+# ui-library/src/components/Button/Button.tsx
 
+cd ui-library
+npm run bump
+# Enter: 1 (Major)
+# Version: 1.1.1 → 2.0.0
+
+cd ..
 git add .
-git commit -m "docs: update demo"
-
-# No prompt! (demo-app changes don't affect library version)
-```
-
-### Scenario 4: Skip Version Update
-
-```bash
-# Minor style change
-# Edit ui-library/src/components/Button/Button.css
-
-git add .
-git commit -m "style: adjust button padding"
-
-# Prompt appears:
-# Enter choice (1-4): 4  ← You type "4" to skip
-
-# No version change
+git commit -m "feat!: redesign Button API"
+git push
 ```
 
 ---
 
-## 🚀 Complete Workflow Example
+## 🎯 Why This Approach?
 
-```bash
-# 1. Create feature branch
-git checkout -b feature/new-component
+**Problems with Git Hook Prompts**:
+- ❌ Don't work reliably on Windows
+- ❌ PowerShell/Git Bash compatibility issues
+- ❌ stdin/tty problems in hooks
 
-# 2. Add new component to ui-library
-# ... create files ...
-
-# 3. Stage changes
-git add .
-
-# 4. Commit (version prompt appears!)
-git commit -m "feat: add RadioButton component"
-# → Prompted for version
-# → You select "2" (minor)
-# → Version updates to 1.1.0
-# → Commit includes version change
-
-# 5. Push (ESLint check runs)
-git push -u origin feature/new-component
-# → ESLint validates
-# → Push succeeds
-
-# 6. Create PR on GitHub
-# feature/new-component → dev → main
-```
-
----
-
-## 🎓 Benefits
-
-### Why on Commit (Not Push)?
-- ✅ **More reliable** - Commit hooks work better with interactive prompts
-- ✅ **Immediate feedback** - Version updated right away
-- ✅ **Single commit** - Version change included in your commit
-- ✅ **Works on Windows** - No stdin issues
-
-### Why Only for UI Library?
-- ✅ **Semantic versioning** - Only library changes need versions
-- ✅ **No noise** - Demo app changes don't trigger prompts
-- ✅ **Focused** - Only prompts when it matters
+**Benefits of npm run bump**:
+- ✅ **Works perfectly** - runs in normal terminal
+- ✅ **Interactive** - readline works properly
+- ✅ **Simple** - just one command
+- ✅ **Reliable** - no Git hook issues
+- ✅ **Clear** - you control when to bump
 
 ---
 
 ## 📊 Summary
 
-**Hooks Active**:
-1. **prepare-commit-msg** - Version prompt when committing ui-library changes
-2. **pre-push** - ESLint validation before push
-3. **pre-push** - Main branch protection
+**Version Update**:
+```bash
+cd ui-library
+npm run bump
+```
 
-**Workflow**:
-1. Edit ui-library files
-2. `git add .`
-3. `git commit -m "message"` ← **Version prompt appears here!**
-4. Select version type (1-4)
-5. `git push` ← ESLint check runs here
-6. Create PR
+**Full Workflow**:
+```bash
+# Edit → Bump → Commit → Push
+cd ui-library
+npm run bump
+cd ..
+git add .
+git commit -m "message"
+git push
+```
 
-**Result**: Automatic versioning with every ui-library commit! 🎉
+**Result**: Simple, reliable versioning that actually works! 🎉

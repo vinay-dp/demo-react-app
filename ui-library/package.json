@@ -38,6 +38,7 @@
     "preview": "vite preview",
     "prepublishOnly": "npm run build",
     "prepare": "cd .. && husky ui-library/.husky",
+    "bump": "node ../scripts/bump-version.js",
     "version:major": "npm version major --no-git-tag-version",
     "version:minor": "npm version minor --no-git-tag-version",
     "version:patch": "npm version patch --no-git-tag-version"
