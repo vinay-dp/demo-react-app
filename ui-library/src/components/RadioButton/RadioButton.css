@@ -1,0 +1,80 @@
+/* RadioButton Component Styles */
+
+.ui-radio {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding: 8px 0;
+  gap: 10px;
+}
+
+.ui-radio--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Hide default radio button */
+.ui-radio__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Custom radio button */
+.ui-radio__custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #646cff;
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ui-radio__custom::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #646cff;
+  transition: transform 0.2s ease;
+}
+
+/* Checked state */
+.ui-radio__input:checked + .ui-radio__custom::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Hover state */
+.ui-radio:hover .ui-radio__custom {
+  border-color: #535bf2;
+  box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
+}
+
+.ui-radio--disabled:hover .ui-radio__custom {
+  box-shadow: none;
+}
+
+/* Focus state */
+.ui-radio__input:focus + .ui-radio__custom {
+  outline: 2px solid #646cff;
+  outline-offset: 2px;
+}
+
+/* Label */
+.ui-radio__label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.87);
+  line-height: 1.5;
+}
+
+.ui-radio--disabled .ui-radio__label {
+  color: rgba(255, 255, 255, 0.5);
+}

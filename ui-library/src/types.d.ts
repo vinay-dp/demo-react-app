@@ -20,3 +20,13 @@ export interface DropdownProps extends SelectHTMLAttributes<HTMLSelectElement> {
     options: string[];
     placeholder?: string;
 }
+
+export interface RadioButtonProps {
+    name: string;
+    value: string;
+    checked: boolean;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    label: string;
+    disabled?: boolean;
+}
+
