@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/vinay-dp/demo-react-app/compare/v1.1.0...v1.1.1) (2026-01-17)
+
+
+### Bug Fixes
+
+* bug ([7aa23ea](https://github.com/vinay-dp/demo-react-app/commit/7aa23ea436a8adf0065975d4e50c7e6d332cacde))
+* correct Commitizen path configuration ([c4cc078](https://github.com/vinay-dp/demo-react-app/commit/c4cc07855b5bfcffc1500745397666afe2b22669))
+
 ## 1.1.0 (2026-01-17)
 
 
