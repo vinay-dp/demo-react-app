@@ -4,7 +4,7 @@
 import { useState } from 'react';
 // Import all components from the ui-library package
 // This works because we linked ui-library as an npm dependency
-import { Button, Icon, Input, Dropdown, RadioButton, Checkbox } from 'ui-library';
+import { Button, Icon, Input, Dropdown, RadioButton, Checkbox, TextField } from 'ui-library';
 // Import the CSS from the library
 import 'ui-library/dist/ui-library.css';
 import './App.css';
@@ -16,10 +16,15 @@ function App() {
   const [country, setCountry] = useState('');
   const [gender, setGender] = useState('');
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [phone, setPhone] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+
+  // Country options
+  const countries = ['United States', 'Canada', 'United Kingdom', 'Australia', 'India'];
 
   // Handle form submission
   const handleSubmit = () => {
-    alert(`Form Submitted!\nName: ${name}\nEmail: ${email}\nCountry: ${country}\nGender: ${gender}\nAccept Terms: ${acceptTerms ? 'Yes' : 'No'}`);
+    alert(`Form Submitted!\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nCountry: ${country}\nGender: ${gender}\nAccept Terms: ${acceptTerms ? 'Yes' : 'No'}`);
   };
 
   return (
@@ -62,9 +67,31 @@ function App() {
             </div>
 
             <div className="form-group">
+              <TextField
+                label="Phone Number"
+                type="tel"
+                placeholder="Enter your phone number"
+                value={phone}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setPhone(value);
+                  // Simple validation
+                  if (value && !/^\d{10}$/.test(value.replace(/\D/g, ''))) {
+                    setPhoneError('Please enter a valid 10-digit phone number');
+                  } else {
+                    setPhoneError('');
+                  }
+                }}
+                error={phoneError}
+                helperText={!phoneError ? 'Format: 1234567890' : undefined}
+                required
+              />
+            </div>
+
+            <div className="form-group">
               <label>Country</label>
               <Dropdown
-                options={['United States', 'Canada', 'United Kingdom', 'Australia', 'India']}
+                options={countries}
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="Select your country"
@@ -115,6 +142,8 @@ function App() {
                 onClick={() => {
                   setName('');
                   setEmail('');
+                  setPhone('');
+                  setPhoneError('');
                   setCountry('');
                   setGender('');
                   setAcceptTerms(false);
