@@ -4,7 +4,7 @@
 import { useState } from 'react';
 // Import all components from the ui-library package
 // This works because we linked ui-library as an npm dependency
-import { Button, Icon, Input, Dropdown } from 'ui-library';
+import { Button, Icon, Input, Dropdown, RadioButton } from 'ui-library';
 // Import the CSS from the library
 import 'ui-library/dist/ui-library.css';
 import './App.css';
@@ -14,10 +14,11 @@ function App() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [country, setCountry] = useState('');
+  const [gender, setGender] = useState('');
 
   // Handle form submission
   const handleSubmit = () => {
-    alert(`Form Submitted!\nName: ${name}\nEmail: ${email}\nCountry: ${country}`);
+    alert(`Form Submitted!\nName: ${name}\nEmail: ${email}\nCountry: ${country}\nGender: ${gender}`);
   };
 
   return (
@@ -69,6 +70,33 @@ function App() {
               />
             </div>
 
+            <div className="form-group">
+              <label>Gender</label>
+              <div style={{ display: 'flex', gap: '20px', marginTop: '8px' }}>
+                <RadioButton
+                  name="gender"
+                  value="male"
+                  checked={gender === 'male'}
+                  onChange={(e) => setGender(e.target.value)}
+                  label="Male"
+                />
+                <RadioButton
+                  name="gender"
+                  value="female"
+                  checked={gender === 'female'}
+                  onChange={(e) => setGender(e.target.value)}
+                  label="Female"
+                />
+                <RadioButton
+                  name="gender"
+                  value="other"
+                  checked={gender === 'other'}
+                  onChange={(e) => setGender(e.target.value)}
+                  label="Other"
+                />
+              </div>
+            </div>
+
             <div className="button-group">
               <Button onClick={handleSubmit}>
                 Submit Form
@@ -79,6 +107,7 @@ function App() {
                   setName('');
                   setEmail('');
                   setCountry('');
+                  setGender('');
                 }}
               >
                 Clear Form
