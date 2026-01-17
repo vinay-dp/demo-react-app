@@ -1,6 +1,6 @@
 #!/bin/sh
 
 # Run the Node.js version prompt script
-node .husky/version-on-commit.js < /dev/tty
+node .husky/version-on-commit.js
 
 exit 0
