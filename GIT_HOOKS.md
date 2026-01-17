@@ -89,9 +89,47 @@ git push --no-verify
 
 ⚠️ **Warning**: This bypasses all quality checks and versioning. Use only in emergencies!
 
-## Main Branch
+## Main Branch Protection
 
-Pushes to the `main` branch **skip all checks** to avoid conflicts during PR merges.
+Direct pushes to the `main` branch are **blocked** to enforce the Pull Request workflow.
+
+### What Happens
+
+```bash
+git checkout main
+git push
+
+❌ Direct pushes to 'main' branch are not allowed!
+
+Please use the Pull Request workflow:
+  1. Create a feature/dev branch
+  2. Make your changes and commit
+  3. Push to your branch
+  4. Create a Pull Request to merge into main
+```
+
+### Proper Workflow
+
+```bash
+# Create a feature branch
+git checkout -b feature/my-feature
+
+# Make changes and commit
+git add .
+git commit -m "feat: add new feature"
+
+# Push to feature branch (hooks will run)
+git push -u origin feature/my-feature
+
+# Create PR on GitHub to merge into main
+```
+
+### Why This Matters
+
+- ✅ **Code review** - All changes reviewed before merging
+- ✅ **CI/CD validation** - GitHub Actions test changes
+- ✅ **Quality control** - Prevents accidental direct commits
+- ✅ **Team collaboration** - Transparent change process
 
 ## Troubleshooting
 

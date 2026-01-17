@@ -3,10 +3,21 @@
 # Get current branch
 current_branch=$(git branch --show-current)
 
-# Skip if pushing to main
+# Block direct pushes to main - require PR workflow
 if [ "$current_branch" = "main" ]; then
-  echo "✅ Pushing to main - skipping pre-push checks"
-  exit 0
+  echo ""
+  echo "❌ Direct pushes to 'main' branch are not allowed!"
+  echo ""
+  echo "Please use the Pull Request workflow:"
+  echo "  1. Create a feature/dev branch"
+  echo "  2. Make your changes and commit"
+  echo "  3. Push to your branch"
+  echo "  4. Create a Pull Request to merge into main"
+  echo ""
+  echo "Current branch: main"
+  echo "To push to a different branch: git checkout -b your-branch-name"
+  echo ""
+  exit 1
 fi
 
 echo "🔍 Running pre-push checks for branch: $current_branch"
