@@ -1,7 +1,16 @@
+```yaml
 name: Publish UI Library to npm
+# This workflow publishes the UI library to npm when a new version tag is pushed
+# Currently disabled - enable when ready to publish to npm
+# To enable: uncomment the 'on' section and add NPM_TOKEN secret
 
+# on:
+#   push:
+#     tags:
+#       - 'v*'  # Triggers on version tags like v1.0.0, v1.1.0, etc.
+
+# Manual trigger only
 on:
-  # Trigger manually from GitHub Actions tab
   workflow_dispatch:
     inputs:
       version:
@@ -10,8 +19,6 @@ on:
         type: string
   
   # Or trigger on version tags
-  push:
-    tags:
       - 'v*.*.*'
 
 jobs:
