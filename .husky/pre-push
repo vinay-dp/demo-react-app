@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Get current branch
+current_branch=$(git branch --show-current)
+
+# Skip if pushing to main
+if [ "$current_branch" = "main" ]; then
+  echo "✅ Pushing to main - skipping pre-push checks"
+  exit 0
+fi
+
+echo "🔍 Running pre-push checks for branch: $current_branch"
+echo ""
+
+# Run ESLint on ui-library
+echo "📝 Running ESLint..."
+cd ui-library
+npm run lint
+lint_result=$?
+cd ..
+
+if [ $lint_result -ne 0 ]; then
+  echo ""
+  echo "❌ ESLint errors found! Please fix them before pushing."
+  echo "   Run 'cd ui-library && npm run lint' to see errors"
+  exit 1
+fi
+
+echo "✅ ESLint passed"
+echo ""
+
+# Prompt for version update
+echo "📦 Checking version..."
+node .husky/version-prompt.js
+version_result=$?
+
+if [ $version_result -ne 0 ]; then
+  echo "❌ Version update failed or cancelled"
+  exit 1
+fi
+
+echo ""
+echo "✅ All pre-push checks passed!"
+exit 0
