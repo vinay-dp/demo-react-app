@@ -27,3 +27,8 @@
 .ui-button--secondary:hover {
   background-color: #545b62;
 }
+
+
+.only_for_demo {
+  background-color: #007bff;
+}
