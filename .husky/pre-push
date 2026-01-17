@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/sh
 
 # Get current branch
 current_branch=$(git branch --show-current)
@@ -43,3 +42,4 @@ fi
 echo ""
 echo "✅ All pre-push checks passed!"
 exit 0
+
