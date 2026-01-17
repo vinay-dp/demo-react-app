@@ -48,7 +48,7 @@
 }
 
 /* Checked state */
-.ui-radio__input:checked + .ui-radio__custom::after {
+.ui-radio__input:checked+.ui-radio__custom::after {
   transform: translate(-50%, -50%) scale(1);
 }
 
@@ -63,7 +63,7 @@
 }
 
 /* Focus state */
-.ui-radio__input:focus + .ui-radio__custom {
+.ui-radio__input:focus+.ui-radio__custom {
   outline: 2px solid #646cff;
   outline-offset: 2px;
 }
@@ -71,10 +71,10 @@
 /* Label */
 .ui-radio__label {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.87);
+  color: #213547;
   line-height: 1.5;
 }
 
 .ui-radio--disabled .ui-radio__label {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(33, 53, 71, 0.5);
 }
