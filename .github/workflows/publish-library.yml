@@ -1,69 +1,52 @@
+# This workflow publishes the UI library to npm when a new version tag is pushed
+# Currently disabled - enable when ready to publish to npm
+# To enable: uncomment the 'on.push' section and add NPM_TOKEN secret
+
 name: Publish UI Library to npm
 
 on:
-  # Trigger manually from GitHub Actions tab
+  # Manual trigger only (automatic publishing disabled)
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version to publish (e.g., 1.0.1)'
-        required: true
+        description: 'Version to publish'
+        required: false
         type: string
   
-  # Or trigger on version tags
-  push:
-    tags:
-      - 'v*.*.*'
+  # Automatic publishing on version tags (currently disabled)
+  # Uncomment below to enable automatic publishing:
+  # push:
+  #   tags:
+  #     - 'v*'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        registry-url: 'https://registry.npmjs.org'
-        cache: 'npm'
-        cache-dependency-path: ui-library/package-lock.json
-    
-    - name: Install dependencies
-      working-directory: ./ui-library
-      run: npm ci
-    
-    - name: Run linter
-      working-directory: ./ui-library
-      run: npm run lint
-    
-    - name: Build library
-      working-directory: ./ui-library
-      run: npm run build
-    
-    - name: Update version (if manual trigger)
-      if: github.event_name == 'workflow_dispatch'
-      working-directory: ./ui-library
-      run: npm version ${{ github.event.inputs.version }} --no-git-tag-version
-    
-    - name: Publish to npm
-      working-directory: ./ui-library
-      run: npm publish --access public
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-    
-    - name: Create GitHub Release
-      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref_name }}
-        release_name: Release ${{ github.ref_name }}
-        body: |
-          UI Library release ${{ github.ref_name }}
-          
-          Published to npm: https://www.npmjs.com/package/ui-library
-        draft: false
-        prerelease: false
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - name: Install dependencies
+        working-directory: ./ui-library
+        run: npm ci
+      
+      - name: Build library
+        working-directory: ./ui-library
+        run: npm run build
+      
+      - name: Run tests
+        working-directory: ./ui-library
+        run: npm run lint
+      
+      - name: Publish to npm
+        working-directory: ./ui-library
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

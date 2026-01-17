@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Simplified prepare-commit-msg - no version prompts
+# Version updates should be done manually with: npm run bump
+
+exit 0
