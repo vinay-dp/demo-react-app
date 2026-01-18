@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/vinay-dp/demo-react-app/compare/v1.2.0...v1.3.0) (2026-01-17)
+
+
+### Features
+
+* publish ([ced3255](https://github.com/vinay-dp/demo-react-app/commit/ced32552118f9abb93bdd435f61ddb047cb0d374))
+
 ## [1.2.0](https://github.com/vinay-dp/demo-react-app/compare/v1.1.1...v1.2.0) (2026-01-17)
 
 

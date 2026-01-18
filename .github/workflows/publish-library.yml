@@ -1,23 +1,14 @@
-# This workflow publishes the UI library to npm when a new version tag is pushed
-# Currently disabled - enable when ready to publish to npm
-# To enable: uncomment the 'on.push' section and add NPM_TOKEN secret
-
-name: Publish UI Library to npm
+name: Publish UI Library to GitHub Packages
 
 on:
-  # Manual trigger only (automatic publishing disabled)
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to publish'
-        required: false
-        type: string
-  
-  # Automatic publishing on version tags (currently disabled)
-  # Uncomment below to enable automatic publishing:
-  # push:
-  #   tags:
-  #     - 'v*'
+  push:
+    tags:
+      - 'v*'  # Triggers on v1.2.0, v1.3.0, etc.
+  workflow_dispatch:  # Manual trigger option
+
+permissions:
+  contents: write
+  packages: write
 
 jobs:
   publish:
@@ -31,7 +22,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@vinay-dp'
       
       - name: Install dependencies
         working-directory: ./ui-library
@@ -45,8 +37,41 @@ jobs:
         working-directory: ./ui-library
         run: npm run lint
       
-      - name: Publish to npm
+      - name: Publish to GitHub Packages
         working-directory: ./ui-library
-        run: npm publish --access public
+        run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            ## 📦 UI Library Release ${{ github.ref_name }}
+            
+            ### Installation
+            
+            Configure your `.npmrc`:
+            ```
+            @vinay-dp:registry=https://npm.pkg.github.com
+            ```
+            
+            Then install:
+            ```bash
+            npm install @vinay-dp/ui-library@${{ github.ref_name }}
+            ```
+            
+            ### Usage
+            ```tsx
+            import { TextField, Button, Checkbox } from '@vinay-dp/ui-library';
+            import '@vinay-dp/ui-library/dist/ui-library.css';
+            ```
+            
+            ### Changes
+            See [CHANGELOG](https://github.com/vinay-dp/demo-react-app/blob/main/ui-library/CHANGELOG.md) for details.
+          draft: false
+          prerelease: false
